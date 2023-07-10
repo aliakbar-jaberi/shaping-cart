@@ -9,6 +9,7 @@ const cartTotal = document.querySelector(".tota__price");
 const cartContent = document.querySelector(".cart--content");
 const clearCart = document.querySelector(".btn__removeall");
 
+let buttonsDom = [];
 // Data recall
 import { productsData } from "/deta.js";
 let carts = [];
@@ -91,8 +92,9 @@ class Ui {
   }
   getAddToCartBtns() {
     const addTocartBtn = document.querySelectorAll(".add-to-cart");
-    const buttons = [...addTocartBtn];
 
+    const buttons = [...addTocartBtn];
+    buttonsDom = buttons;
     buttons.forEach((btn) => {
       const id = btn.dataset.id;
       // check jf this product id is cart or not
@@ -160,20 +162,20 @@ class Ui {
           <td><p>${cartItem.price}</p></td>
           <td>
             <div class="cart-namber">
-              <span class="cart-plus"><i class="fas fa-chevron-up"></i></span>
+              <span class="cart-plus"><i class="fas fa-chevron-up" data-id=${cartIteme.id} ></i></span>
               <input type="text" value="${cartItem.quntity}" />
               <span class="cart-minus">
-                <i class="fas fa-chevron-down"></i
+                <i class="fas fa-chevron-down" data-id=${cartIteme.id}></i
               ></span>
             </div>
           </td>
-          <td><span><i class="fa-solid fa-trash-can"></i></span></td>`;
+          <td><span><i class="fa-solid fa-trash-can"  data-id=${cartIteme.id}></i></span></td>`;
     cartContent.appendChild(tr);
   }
 
   setupApp() {
     // get cart fromt storeg
-    carts = Storage.getCart() ;
+    carts = Storage.getCart();
     // add cart item
     carts.forEach((cartitem) => this.addCartItem(cartitem));
     // set values
@@ -181,16 +183,33 @@ class Ui {
   }
 
   cartLogic() {
-    clearCart.addEventListener("click", () => {
-      carts.forEach((cItem) => this.removeItem(cItem.id));
-    });
+    clearCart.addEventListener("click", () => this.clearCart());
+  }
+
+  clearCart() {
+    // remove
+    carts.forEach((cItem) => this.removeItem(cItem.id));
+    // remove cart content chidlren
+    while (cartContent.children.length) {
+      cartContent.removeChild(cartContent.children[0]);
+    }
+    closCart();
   }
   removeItem(id) {
     // update cart
     carts = carts.filter((cItem) => cItem.id !== id);
     this.setCartValue(carts);
-    // update storage 
-    Storage.saveCart(carts)
+    // update storage
+    Storage.saveCart(carts);
+
+    // get add to cart btns => update text and disables
+    const button = buttonsDom.find(
+      (btn) => parseInt(btn.dataset.id) === parseInt(id)
+    );
+    button.innerHTML = `<i class="fas fa-shopping-cart"></i>
+                <p>add to cart</p>`;
+    button.disabled = false;
+    button.style.padding = "10px 20px";
   }
 }
 // storage
