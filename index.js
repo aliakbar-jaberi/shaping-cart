@@ -10,6 +10,8 @@ const cartContent = document.querySelector(".cart--content");
 const clearCart = document.querySelector(".btn__removeall");
 
 let buttonsDom = [];
+let btnDOm = [];
+let valueDOM = [];
 // Data recall
 import { productsData } from "/deta.js";
 let carts = [];
@@ -79,52 +81,67 @@ class Ui {
               <p class="product-price">$ ${item.price}</p>
               <p class="product-title">${item.title}</p>
             </div>
-            <div class="product-btn">
+            <div class="product-btn" }>
               <button  class="btn add-to-cart" data-id=${item.id}>
                 <i class="fas fa-shopping-cart"></i>
                 <p>add to cart</p>
               </button>
             </div>
+            <div class="product-btn" >
+            <div class="btn btn--content" data-id=${item.id}>
+                <div class="btn--plus" data-id=${item.id}>+</div>
+                <div class="product--value" data-id=${item.id}>1</div>
+                <div class="btn--minus" data-id=${item.id}>-</div>
+              </div>
+            </div>
+
           </div>`;
 
       poroductsDOM.innerHTML = result;
     });
   }
+
   getAddToCartBtns() {
     const addTocartBtn = document.querySelectorAll(".add-to-cart");
-
     const buttons = [...addTocartBtn];
+    const btnContent = [...document.querySelectorAll(".btn--content")];
+    const poroductValue = [...document.querySelectorAll(".product--value")];
     buttonsDom = buttons;
+    btnDOm = btnContent;
+    valueDOM = poroductValue;
     buttons.forEach((btn) => {
       const id = btn.dataset.id;
       // check jf this product id is cart or not
       const isInCart = carts.find((p) => p.id === parseInt(id));
-      const quntity = carts.filter((p) => p.id === parseInt(id));
+      const quntity = carts.find((p) => p.id === parseInt(id));
       if (isInCart) {
-        btn.innerHTML = ` <div class="btn btn--content">
-                <div class="btn--plus">+</div>
-                <div class="product--value">${quntity[0].quntity}</div>
-                <div class="btn--minus">-</div>
-              </div> `;
-        btn.style.padding = "0";
-        btn.disabled = true;
+        btn.style.display = "none";
+        btnContent.forEach((btn) => {
+          const i = btn.dataset.id;
+          if (i == id) {
+            btn.style.display = "flex";
+          }
+        });
+        const value = poroductValue.find((p) => p.dataset.id == id);
+        value.innerText = quntity.quntity;
 
         // Add new product to cart
       } else
-        btn.addEventListener("click", (event) => {
-          event.target.disabled = true;
+        btn.addEventListener("click", () => {
           // get product from products
           const addedProduct = { ...Storage.getPoduct(id), quntity: 1 };
           // add to cart
           carts = [...carts, addedProduct];
           // save cart to local storage
-          const quntity = carts.filter((p) => p.id === parseInt(id));
-          event.target.innerHTML = `<div class="btn btn--content">
-                <div class="btn--plus">+</div>
-                <div class="product--value">${quntity[0].quntity}</div>
-                <div class="btn--minus">-</div>
-              </div>`;
-          btn.style.padding = "0";
+
+          btn.style.display = "none";
+          btnContent.forEach((btn) => {
+            const i = btn.dataset.id;
+            if (i == id) {
+              btn.style.display = "flex";
+            }
+          });
+
           Storage.saveCart(carts);
           // update cart value
           this.setCartValue(carts);
@@ -162,14 +179,14 @@ class Ui {
           <td><p>${cartItem.price}</p></td>
           <td>
             <div class="cart-namber">
-              <span class="cart-plus"><i class="fas fa-chevron-up" data-id=${cartIteme.id} ></i></span>
+              <i class="fas fa-chevron-up" data-id="${cartItem.id}" ></i>
               <input type="text" value="${cartItem.quntity}" />
-              <span class="cart-minus">
-                <i class="fas fa-chevron-down" data-id=${cartIteme.id}></i
-              ></span>
+              
+                <i class="fas fa-chevron-down" data-id="${cartItem.id}"></i
+              >
             </div>
           </td>
-          <td><span><i class="fa-solid fa-trash-can"  data-id=${cartIteme.id}></i></span></td>`;
+          <td><span><i class="fa-solid fa-trash-can"  data-id="${cartItem.id}"></i></span></td>`;
     cartContent.appendChild(tr);
   }
 
@@ -184,6 +201,26 @@ class Ui {
 
   cartLogic() {
     clearCart.addEventListener("click", () => this.clearCart());
+    // cart functionality
+    cartContent.addEventListener("click", (event) => {
+      if (event.target.classList.contains("fa-chevron-up")) {
+        const addQuantity = event.target;
+        // get item from cart
+        const addedItem = carts.find(
+          (cItem) => cItem.id == addQuantity.dataset.id
+        );
+        addedItem.quntity++;
+        // save cart value
+        Storage.saveCart(carts);
+        // update cart value
+        this.setCartValue(carts);
+
+        // update cart item in UI
+        addQuantity.nextElementSibling.value = addedItem.quntity;
+        const value = valueDOM.find((p) => p.dataset.id == addedItem.id);
+        value.innerText = addedItem.quntity;
+      }
+    });
   }
 
   clearCart() {
@@ -193,12 +230,14 @@ class Ui {
     while (cartContent.children.length) {
       cartContent.removeChild(cartContent.children[0]);
     }
+
     closCart();
   }
   removeItem(id) {
     // update cart
     carts = carts.filter((cItem) => cItem.id !== id);
     this.setCartValue(carts);
+
     // update storage
     Storage.saveCart(carts);
 
@@ -206,10 +245,11 @@ class Ui {
     const button = buttonsDom.find(
       (btn) => parseInt(btn.dataset.id) === parseInt(id)
     );
-    button.innerHTML = `<i class="fas fa-shopping-cart"></i>
-                <p>add to cart</p>`;
-    button.disabled = false;
-    button.style.padding = "10px 20px";
+    const btn = btnDOm.find((btn) => parseInt(btn.dataset.id) === parseInt(id));
+
+    button.style.display = "flex";
+
+    btn.style.display = "none";
   }
 }
 // storage

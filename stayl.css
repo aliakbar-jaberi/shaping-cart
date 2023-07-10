@@ -161,7 +161,7 @@ margin-bottom: 50px;
   cursor: pointer;
 }
 
-.product-btn{
+.product-btn,.product-btnD{
   width: 100%;
   display: flex;
   justify-content: center;
@@ -248,11 +248,11 @@ color: var(--primaryColor);
 
 }
 
-.cart-plus:hover{
+.fa-chevron-up:hover{
   color: var(--colorok);
 }
 
-.cart-minus:hover{
+.fa-chevron-down:hover{
   color: var(--mainRed);
 }
 
@@ -359,12 +359,13 @@ color: var(--primaryColor);
 }
 
 .btn--content{
+  display: none;
   justify-content: space-between;
   align-items: center;
   padding: 0;
   border-radius: 8px;
   overflow: hidden;
-  width: 100%;
+ 
 }
  .btn--plus, .product--value ,.btn--minus{
   width: 30px;
