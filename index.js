@@ -186,7 +186,7 @@ class Ui {
               >
             </div>
           </td>
-          <td><span><i class="fa-solid fa-trash-can"  data-id="${cartItem.id}"></i></span></td>`;
+          <td><i class="fa-solid fa-trash-can"  data-id="${cartItem.id}"></i></td>`;
     cartContent.appendChild(tr);
   }
 
@@ -219,6 +219,15 @@ class Ui {
         addQuantity.nextElementSibling.value = addedItem.quntity;
         const value = valueDOM.find((p) => p.dataset.id == addedItem.id);
         value.innerText = addedItem.quntity;
+      } else if (event.target.classList.contains("fa-trash-can")) {
+        // get item remove
+        const removeItem = event.target;
+        const _removedItem = carts.find((c) => c.id == removeItem.dataset.id);
+        // remove from carts
+
+        this.removeItem(_removedItem.id);
+        //  remove in UI
+        cartContent.removeChild(removeItem.parentElement.parentElement);
       }
     });
   }
