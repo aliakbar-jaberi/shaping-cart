@@ -241,7 +241,7 @@ class Ui {
           );
           const value = valueDOM.find((p) => p.dataset.id == subtractedItem.id);
           value.innerText = subtractedItem.quntity;
-          return
+          return;
         }
         // down from carts
         subtractedItem.quntity--;
@@ -254,7 +254,7 @@ class Ui {
         subQuantity.previousElementSibling.value = subtractedItem.quntity;
         const value = valueDOM.find((p) => p.dataset.id == subtractedItem.id);
         value.innerText = subtractedItem.quntity;
-      }
+  }
     });
   }
 
