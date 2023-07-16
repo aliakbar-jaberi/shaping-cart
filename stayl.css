@@ -161,16 +161,18 @@ margin-bottom: 50px;
   cursor: pointer;
 }
 
-.product-btn,.product-btnD{
+.product-btn{
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 20px;
+  
 }
 .add-to-cart i{
   margin-right: 5px;
   pointer-events: none;
+
 }
 .add-to-cart p{
   pointer-events: none;

@@ -11,7 +11,7 @@ const clearCart = document.querySelector(".btn__removeall");
 
 let buttonsDom = [];
 let btnDOm = [];
-let valueDOM = [];
+
 // Data recall
 import { productsData } from "/deta.js";
 let carts = [];
@@ -108,7 +108,6 @@ class Ui {
     const poroductValue = [...document.querySelectorAll(".product--value")];
     buttonsDom = buttons;
     btnDOm = btnContent;
-    valueDOM = poroductValue;
     buttons.forEach((btn) => {
       const id = btn.dataset.id;
       // check jf this product id is cart or not
@@ -166,8 +165,10 @@ class Ui {
   }
   addCartItem(cartItem) {
     const tr = document.createElement("tr");
+    tr.dataset.id = cartItem.id;
+    tr.classList = "cart-item";
     tr.classList.add("cart-item");
-    tr.innerHTML = `<td >
+    tr.innerHTML = `<td  >
             <div class="cart-img">
               <img
                 src=${cartItem.imageUrl}
@@ -180,7 +181,7 @@ class Ui {
           <td>
             <div class="cart-namber">
               <i class="fas fa-chevron-up" data-id="${cartItem.id}" ></i>
-              <input type="text" value="${cartItem.quntity}" />
+              <input class="cart-quntity" data-id="${cartItem.id}"  type="text" value="${cartItem.quntity}" />
               
                 <i class="fas fa-chevron-down" data-id="${cartItem.id}"></i
               >
@@ -203,61 +204,98 @@ class Ui {
     clearCart.addEventListener("click", () => this.clearCart());
     // cart functionality
     cartContent.addEventListener("click", (event) => {
-      if (event.target.classList.contains("fa-chevron-up")) {
-        const addQuantity = event.target;
-        // get item from cart
-        const addedItem = carts.find(
-          (cItem) => cItem.id == addQuantity.dataset.id
+      this.eventCart(event);
+    });
+    btnDOm.forEach((b) => {
+      b.addEventListener("click", (e) => {
+        const id = e.target.dataset.id;
+        const item = carts.find((cItem) => cItem.id == id);
+        const itemCart = [...document.querySelectorAll(".cart-item")];
+        const cartQuantity = [...document.querySelectorAll(".cart-quntity")];
+        const _cartQuantity = cartQuantity.find(
+          (i) => i.dataset.id == e.target.dataset.id
         );
-        addedItem.quntity++;
-        // save cart value
-        Storage.saveCart(carts);
-        // update cart value
-        this.setCartValue(carts);
 
-        // update cart item in UI
-        addQuantity.nextElementSibling.value = addedItem.quntity;
-        const value = valueDOM.find((p) => p.dataset.id == addedItem.id);
-        value.innerText = addedItem.quntity;
-      } else if (event.target.classList.contains("fa-trash-can")) {
-        // get item remove
-        const removeItem = event.target;
-        const _removedItem = carts.find((c) => c.id == removeItem.dataset.id);
-        // remove from carts
-
-        this.removeItem(_removedItem.id);
-        //  remove in UI
-        cartContent.removeChild(removeItem.parentElement.parentElement);
-      } else if (event.target.classList.contains("fa-chevron-down")) {
-        // get item
-        const subQuantity = event.target;
-        const subtractedItem = carts.find(
-          (c) => c.id == subQuantity.dataset.id
-        );
-        if (subtractedItem.quntity === 1) {
-          this.removeItem(subtractedItem.id);
-          cartContent.removeChild(
-            subQuantity.parentElement.parentElement.parentElement
-          );
-          const value = valueDOM.find((p) => p.dataset.id == subtractedItem.id);
-          value.innerText = subtractedItem.quntity;
-          return;
+        if (e.target.classList.contains("btn--plus")) {
+          const addQuantity = e.target;
+          item.quntity++;
+          Storage.saveCart(carts);
+          this.setCartValue(carts);
+          addQuantity.nextElementSibling.innerText = item.quntity;
+          _cartQuantity.value = item.quntity;
+        } else if (e.target.classList.contains("btn--minus")) {
+          const subQuantity = e.target;
+          if (item.quntity === 1) {
+            const removeItem = itemCart.find(
+              (i) => i.dataset.id == e.target.dataset.id
+            );
+            this.removeItem(item.id);
+            Storage.saveCart(carts);
+            this.setCartValue(carts);
+            cartContent.removeChild(removeItem);
+            return;
+          }
+          item.quntity--;
+          Storage.saveCart(carts);
+          this.setCartValue(carts);
+          _cartQuantity.value = item.quntity;
+          subQuantity.previousElementSibling.innerText = item.quntity;
         }
-        // down from carts
-        subtractedItem.quntity--;
-        // save cart value
-        Storage.saveCart(carts);
-        // update cart value
-        this.setCartValue(carts);
-
-        // update cart item in UI
-        subQuantity.previousElementSibling.value = subtractedItem.quntity;
-        const value = valueDOM.find((p) => p.dataset.id == subtractedItem.id);
-        value.innerText = subtractedItem.quntity;
-  }
+      });
     });
   }
+  eventCart(event) {
+    if (event.target.classList.contains("fa-chevron-up")) {
+      const addQuantity = event.target;
+      // get item from cart
+      const addedItem = carts.find(
+        (cItem) => cItem.id == addQuantity.dataset.id
+      );
+      addedItem.quntity++;
+      // save cart value
+      Storage.saveCart(carts);
+      // update cart value
+      this.setCartValue(carts);
 
+      // update cart item in UI
+      addQuantity.nextElementSibling.value = addedItem.quntity;
+      const value = valueDOM.find((p) => p.dataset.id == addedItem.id);
+      value.innerText = addedItem.quntity;
+    } else if (event.target.classList.contains("fa-trash-can")) {
+      // get item remove
+      const removeItem = event.target;
+      const _removedItem = carts.find((c) => c.id == removeItem.dataset.id);
+      // remove from carts
+
+      this.removeItem(_removedItem.id);
+      //  remove in UI
+      cartContent.removeChild(removeItem.parentElement.parentElement);
+    } else if (event.target.classList.contains("fa-chevron-down")) {
+      // get item
+      const subQuantity = event.target;
+      const subtractedItem = carts.find((c) => c.id == subQuantity.dataset.id);
+      if (subtractedItem.quntity === 1) {
+        this.removeItem(subtractedItem.id);
+        cartContent.removeChild(
+          subQuantity.parentElement.parentElement.parentElement
+        );
+        const value = valueDOM.find((p) => p.dataset.id == subtractedItem.id);
+        value.innerText = subtractedItem.quntity;
+        return;
+      }
+      // down from carts
+      subtractedItem.quntity--;
+      // save cart value
+      Storage.saveCart(carts);
+      // update cart value
+      this.setCartValue(carts);
+
+      // update cart item in UI
+      subQuantity.previousElementSibling.value = subtractedItem.quntity;
+      const value = valueDOM.find((p) => p.dataset.id == subtractedItem.id);
+      value.innerText = subtractedItem.quntity;
+    }
+  }
   clearCart() {
     // remove
     carts.forEach((cItem) => this.removeItem(cItem.id));
