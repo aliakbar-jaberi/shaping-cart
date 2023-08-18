@@ -1,4 +1,4 @@
-const cartBtn = document.querySelector(".cart-btn");
+const cartBtn = document.querySelector(".fa-cart-shopping");
 const cart = document.querySelector(".cart");
 const backdrop = document.querySelector(".backdrop");
 const menuIcon = document.querySelector(".menu-icon");
