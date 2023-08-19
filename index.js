@@ -8,7 +8,8 @@ const cartIteme = document.querySelector(".cart__item");
 const cartTotal = document.querySelector(".tota__price");
 const cartContent = document.querySelector(".cart--content");
 const clearCart = document.querySelector(".btn__removeall");
-
+const filterBtn = document.querySelector(".fa-square-poll-vertical");
+const filterProduct = document.querySelector(".filter");
 let buttonsDom = [];
 let btnDOm = [];
 
@@ -34,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Save data on localStorage
   Storage.savePoroducts(productsData);
 });
+filterBtn.addEventListener("click",openFilter)
 
 //  FUNCTION
 
@@ -53,6 +55,10 @@ function closCart() {
 // Open the aside menu
 function openMenu() {
   asaidMenu.classList.toggle("menu__active");
+}
+
+function openFilter (){
+  filterProduct.classList.toggle("filtir__active");
 }
 
 // CLASS

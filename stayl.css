@@ -399,6 +399,7 @@ color: var(--primaryColor);
 /* filter */
 
 .filter{
+  width: 0;
   position: fixed;
   top: 60px;
   right: 0;
@@ -407,11 +408,13 @@ color: var(--primaryColor);
   backdrop-filter: blur(8px);
   transition: all 0.2s ease-out;
   color: var(--primaryColor);
-  padding: 20px 10px;
+  transition: all 0.3s ease-in-out;
   overflow: hidden;
+  
 }
 
 .search-box{
+  
   min-height: 30px;
   display: flex;
   align-items: center;
@@ -420,9 +423,17 @@ color: var(--primaryColor);
   border: 1px solid var(--primaryColor);
   padding: 3px;
   border-radius: 8px;
+  margin-bottom: 20px;
+  
 }
 
+
+.filtir__active{
+  width:200px;
+  padding: 20px 10px;
+}
 .search-box input{
+  
   outline: none;
   border: none;
   background-color: transparent;
@@ -433,14 +444,15 @@ color: var(--primaryColor);
 
 .filter-tag{
   display: grid;
-  grid-template-columns: auto auto;
+
+grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
   justify-items: center;
   align-items: center;
   gap: 10px;
   margin-top: 10px;
 }
 
-.filter-tag div{
+.filter-tag a{
   background-color: var(--primaryColor);
   color: var(--mainWhite);
   padding: 5px;
@@ -449,10 +461,17 @@ color: var(--primaryColor);
   border-radius: 8px;
   cursor: pointer;
 transition: all 0.3s ease-in-out;
+text-decoration: none;
 }
 
-.filter-tag div:hover{
+.filter-tag a:hover{
   background-color: var(--mainWhite);
   color: var(--primaryColor);
  
+}
+
+.filter-price div{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
