@@ -25,9 +25,9 @@ body {
   background: var(--mainWhite);
   font-family: "Lato", sans-serif;
   background-color: var(--bodyColor);
-
-
-
+}
+a{
+  text-decoration: none;
 }
 
 .navbar{
@@ -295,11 +295,12 @@ color: var(--primaryColor);
 
 
 
-.aside-content div{
+.aside-content .aside-item{
   cursor: pointer;
   display: flex;
  border-bottom: 1px solid var(--mainGrey);
  padding: 10px 20px;
+ color: var(--primaryColor);
 }
 
 .aside-content div span{
@@ -469,9 +470,17 @@ text-decoration: none;
   color: var(--primaryColor);
  
 }
-
 .filter-price div{
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.filter-titel{
+  display: flex;
+  
+}
+
+.filter-titel i{
+  margin-right: 5px;
 }

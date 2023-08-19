@@ -18,23 +18,23 @@
   <body>
     <aside class="aside-menu">
       <div class="aside-content">
-        <div>
+        <div class="aside-item">
           <span><i class="fa-solid fa-user"></i></span>
           <p>Profile</p>
         </div>
-        <div>
+        <a href="/index.html" class="aside-item" >
           <span><i class="fa-solid fa-house"></i></span>
           <p>Home</p>
-        </div>
-        <div>
+        </a>
+        <div class="aside-item">
           <span><i class="fa-solid fa-address-card"></i></span>
           <p>about us</p>
         </div>
-        <div>
-          <span><i class="fa-solid fa-cart-flatbed"></i></span>
+        <div class="aside-item grouping">
+          <span ><i class="fa-solid fa-cart-flatbed"></i></span>
           <p>Grouping</p>
         </div>
-        <div>
+        <div class="aside-item">
           <span><i class="fa-solid fa-circle-info"></i></i></span>
           <p>Support</p>
         </div>
@@ -45,7 +45,11 @@
         <i class="fa-solid fa-magnifying-glass"></i>
         <input type="text" id="search" placeholder="search product" >
       </form>
-      <h4>Grouping:</h4>
+      <div class="filter-titel">
+        <i class="fa-solid fa-cart-flatbed"></i>
+        <h4>Grouping:</h4>
+      </div>
+      
       <div class="filter-tag">
         <a href="#"  data-filter>All</a>
         <a href="#"  data-filter>test</a>
