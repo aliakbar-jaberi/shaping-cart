@@ -1,3 +1,4 @@
+// http://localhost:3000/items
 const cartBtn = document.querySelector(".fa-cart-shopping");
 const cart = document.querySelector(".cart");
 const backdrop = document.querySelector(".backdrop");
@@ -10,6 +11,7 @@ const cartContent = document.querySelector(".cart--content");
 const clearCart = document.querySelector(".btn__removeall");
 const filterBtn = document.querySelector(".fa-square-poll-vertical");
 const filterProduct = document.querySelector(".filter");
+const groupingBtn = document.querySelector(".grouping");
 let buttonsDom = [];
 let btnDOm = [];
 
@@ -36,6 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
   Storage.savePoroducts(productsData);
 });
 filterBtn.addEventListener("click",openFilter)
+groupingBtn.addEventListener("click", openFilter);
 
 //  FUNCTION
 
