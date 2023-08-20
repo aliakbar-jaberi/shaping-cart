@@ -12,22 +12,30 @@ const clearCart = document.querySelector(".btn__removeall");
 const filterBtn = document.querySelector(".fa-square-poll-vertical");
 const filterProduct = document.querySelector(".filter");
 const groupingBtn = document.querySelector(".grouping");
+const searchInput = document.querySelector("#search");
 let buttonsDom = [];
 let btnDOm = [];
 
 // Data recall
-import { productsData } from "/deta.js";
+// import { productsData } from "/deta.js";
 let carts = [];
+let productsDatas = [];
+
+// axios
+const app = axios.create({
+  baseURL: "http://localhost:3000",
+});
 //  EVENT
 
 cartBtn.addEventListener("click", openCart);
 backdrop.addEventListener("click", closCart);
 menuIcon.addEventListener("click", openMenu);
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   // Construct an array of data
   const products = new Products();
   // Calling the data with the getProducts method of the Products class
-  const productsData = products.getProducts();
+  const productsData = await products.getProducts();
+  productsDatas = productsData;
   const ui = new Ui();
   // set up get cart and set up app
   ui.setupApp();
@@ -37,8 +45,16 @@ document.addEventListener("DOMContentLoaded", () => {
   // Save data on localStorage
   Storage.savePoroducts(productsData);
 });
-filterBtn.addEventListener("click",openFilter)
+filterBtn.addEventListener("click", openFilter);
 groupingBtn.addEventListener("click", openFilter);
+searchInput.addEventListener("input", (e) => {
+  console.log("hi");
+  const ui = new Ui();
+  const filter= e.target.value
+   const poroducts= ui.serchFilter(productsDatas, filter);
+   console.log(poroducts);
+   ui.displayProducts(poroducts);
+});
 
 //  FUNCTION
 
@@ -60,7 +76,7 @@ function openMenu() {
   asaidMenu.classList.toggle("menu__active");
 }
 
-function openFilter (){
+function openFilter() {
   filterProduct.classList.toggle("filtir__active");
 }
 
@@ -69,7 +85,16 @@ function openFilter (){
 // get products
 class Products {
   // Calling the data from the data.js file
-  getProducts() {
+
+  async getProducts() {
+    let productsData = [];
+    try {
+      const Data = await app.get("/items");
+      productsData = Data.data;
+    } catch (error) {
+      console.log(error);
+    }
+    console.log(productsData);
     return productsData;
   }
 }
@@ -82,7 +107,7 @@ class Ui {
       result += `<div class="product">
             <div class="img-container">
               <img
-                src=${item.imageUrl}
+                src=${item.image}
                 class="product-img"
               />
             </div>
@@ -332,6 +357,14 @@ class Ui {
     button.style.display = "flex";
 
     btn.style.display = "none";
+  }
+
+  serchFilter(product, filter) {
+    const searchProduct = product.filter((p) => {
+      return p.title.toLowerCase().includes(filter.toLowerCase());
+    });
+    return searchProduct;
+    
   }
 }
 // storage
