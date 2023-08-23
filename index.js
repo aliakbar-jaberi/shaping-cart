@@ -50,10 +50,9 @@ groupingBtn.addEventListener("click", openFilter);
 searchInput.addEventListener("input", (e) => {
   console.log("hi");
   const ui = new Ui();
-  const filter= e.target.value
-   const poroducts= ui.serchFilter(productsDatas, filter);
-   console.log(poroducts);
-   ui.displayProducts(poroducts);
+  const filter = e.target.value;
+  const poroducts = ui.serchFilter(productsDatas, filter);
+  ui.displayProducts(poroducts);
 });
 
 //  FUNCTION
@@ -363,8 +362,10 @@ class Ui {
     const searchProduct = product.filter((p) => {
       return p.title.toLowerCase().includes(filter.toLowerCase());
     });
-    return searchProduct;
-    
+    if (!searchProduct.title) {
+      poroductsDOM.innerHTML = `<div class="product-erorr"><i class="fa-solid fa-circle-exclamation"></i><h1>Product not found!</h1></div>`;
+    } 
+     return searchProduct;
   }
 }
 // storage
