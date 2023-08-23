@@ -488,3 +488,14 @@ text-decoration: none;
 .filter-titel i{
   margin-right: 5px;
 }
+.product-erorr{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--mainRed);
+}
+
+.product-erorr i{
+  font-size: 4.5rem;
+  margin-bottom: 20px;
+}
