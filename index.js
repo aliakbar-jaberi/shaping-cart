@@ -17,7 +17,7 @@ let buttonsDom = [];
 let btnDOm = [];
 
 // Data recall
-// import { productsData } from "/deta.js";
+import { productsData } from "/deta.js";
 let carts = [];
 let productsDatas = [];
 
@@ -84,18 +84,20 @@ function openFilter() {
 // get products
 class Products {
   // Calling the data from the data.js file
-
-  async getProducts() {
-    let productsData = [];
-    try {
-      const Data = await app.get("/items");
-      productsData = Data.data;
-    } catch (error) {
-      console.log(error);
-    }
-    console.log(productsData);
-    return productsData;
-  }
+ getProducts(){
+  return productsData;
+ }
+  // async getProducts() {
+  //   let productsData = [];
+  //   try {
+  //     const Data = await app.get("/items");
+  //     productsData = Data.data;
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  //   console.log(productsData);
+  //   return productsData;
+  // }
 }
 // display products
 class Ui {
