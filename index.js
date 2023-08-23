@@ -24,9 +24,9 @@ let productsDatas = [];
 let poroduct =[]
 
 // axios
-const app = axios.create({
-  baseURL: "http://localhost:3000",
-});
+// const app = axios.create({
+//   baseURL: "http://localhost:3000",
+// });
 //  EVENT
 
 cartBtn.addEventListener("click", openCart);
