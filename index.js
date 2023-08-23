@@ -397,6 +397,8 @@ class Ui {
         ui.reset();
         t.style.backgroundColor = "var( --mainWhite)";
         t.style.color = "var( --primaryColor)";
+        if (classTag) {searchInput.placeholder = `search in ${classTag}`;
+      } else {searchInput.placeholder = `search in products`;}
       });
     });
   }
