@@ -21,6 +21,7 @@ let btnDOm = [];
 import { productsData } from "/deta.js";
 let carts = [];
 let productsDatas = [];
+let poroduct =[]
 
 // axios
 const app = axios.create({
@@ -37,6 +38,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Calling the data with the getProducts method of the Products class
   const productsData = await products.getProducts();
   productsDatas = productsData;
+  poroduct = productsData;
   const ui = new Ui();
   // set up get cart and set up app
   ui.setupApp();
@@ -386,10 +388,10 @@ class Ui {
         
         console.log(t.dataset.filter);
         const classTag = t.dataset.filter;
-        const poroductFilter = productsDatas.filter((p) => {
+        const poroductFilter = productsData.filter((p) => {
           return p.class.toLowerCase().includes(classTag.toLowerCase());
         });
-        console.log(poroductFilter);
+        productsDatas=poroductFilter
         const ui = new Ui();
         ui.displayProducts(poroductFilter);
         ui.reset();
