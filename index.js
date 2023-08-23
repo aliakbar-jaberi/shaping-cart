@@ -210,7 +210,7 @@ class Ui {
     tr.innerHTML = `<td  >
             <div class="cart-img">
               <img
-                src=${cartItem.imageUrl}
+                src=${cartItem.image}
                 alt="img-1"
               />
             </div>
