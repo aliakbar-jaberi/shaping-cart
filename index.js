@@ -13,6 +13,7 @@ const filterBtn = document.querySelector(".fa-square-poll-vertical");
 const filterProduct = document.querySelector(".filter");
 const groupingBtn = document.querySelector(".grouping");
 const searchInput = document.querySelector("#search");
+const filterTag = document.querySelectorAll(".tag");
 let buttonsDom = [];
 let btnDOm = [];
 
@@ -42,6 +43,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   ui.displayProducts(productsData);
   ui.getAddToCartBtns();
   ui.cartLogic();
+  ui.filter();
   // Save data on localStorage
   Storage.savePoroducts(productsData);
 });
@@ -84,9 +86,9 @@ function openFilter() {
 // get products
 class Products {
   // Calling the data from the data.js file
- getProducts(){
-  return productsData;
- }
+  getProducts() {
+    return productsData;
+  }
   // async getProducts() {
   //   let productsData = [];
   //   try {
@@ -366,8 +368,35 @@ class Ui {
     });
     if (!searchProduct.title) {
       poroductsDOM.innerHTML = `<div class="product-erorr"><i class="fa-solid fa-circle-exclamation"></i><h1>Product not found!</h1></div>`;
-    } 
-     return searchProduct;
+    }
+    return searchProduct;
+  }
+
+  reset(){
+    filterTag.forEach((t) => {
+    t.style.backgroundColor = "var( --primaryColor)";
+    t.style.color = "var( --mainWhite)";
+  })}
+
+  filter() {
+    filterTag.forEach((t) => {
+     
+      
+      t.addEventListener("click", () => {
+        
+        console.log(t.dataset.filter);
+        const classTag = t.dataset.filter;
+        const poroductFilter = productsDatas.filter((p) => {
+          return p.class.toLowerCase().includes(classTag.toLowerCase());
+        });
+        console.log(poroductFilter);
+        const ui = new Ui();
+        ui.displayProducts(poroductFilter);
+        ui.reset();
+        t.style.backgroundColor = "var( --mainWhite)";
+        t.style.color = "var( --primaryColor)";
+      });
+    });
   }
 }
 // storage
