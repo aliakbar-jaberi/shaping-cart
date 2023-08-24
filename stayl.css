@@ -203,7 +203,7 @@ margin-bottom: 50px;
 /* cart */
 .cart{
 z-index: 2;
-  position: absolute;
+  position: fixed;
   top: -200%;
   left: 50%;
   transform: translateX(-50%);
@@ -213,9 +213,14 @@ z-index: 2;
   color: var(--primaryColor);
   transition: all 0.5s ease-out;
   
-  
-  
 }
+
+.cart .cart--conteinr{
+  min-width: 260px;
+  max-height:550px ;
+  overflow-y: auto;
+}
+
 .cart .cart__titel{
   width: 100%;
   display: flex;
@@ -223,9 +228,41 @@ z-index: 2;
   justify-content: center;
   align-items: center;
 }
+
+.cart--content{
+border-collapse: collapse;
+}
+
 .cart td{
   padding: 10px 20px;
- 
+}
+
+.cart-namber {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width:760px) {
+  .cart .cart--conteinr {
+      overflow-y: auto;
+      display: flex;
+      justify-content: center;
+    }
+  .cart td {
+    display: flex;
+      align-items: center;
+      justify-content: center;
+
+  }
+    .cart-botton {
+      border-bottom: 2px solid var(--mainGrey);
+    }
+    .cart-namber{
+      flex-direction: row;
+    }
 }
 .cart-img{
   width: 70px;
@@ -237,13 +274,7 @@ z-index: 2;
   width: 100%;
 }
 
-.cart-namber{
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
+
 .cart-namber input{
   text-align: center;
   outline: none;
@@ -307,6 +338,12 @@ color: var(--primaryColor);
  color: var(--primaryColor);
 }
 
+.aside-content .aside-item:hover{
+  background-color: var(--primaryColor);
+  color: var(--mainWhite);
+  border-radius:0 1rem 1rem 0;
+}
+
 .aside-content div span{
   margin-right:  6px;
 }
@@ -336,6 +373,7 @@ color: var(--primaryColor);
 .cart__total{
   display: flex;
   justify-content: center;
+  margin-top: 20px;
 }
 
 .cart__total .tota__price{
@@ -418,6 +456,14 @@ color: var(--primaryColor);
   
 }
 
+@media (min-width:760px) {
+  .filter {width: 200px;
+  padding: 20px 10px;
+}
+.cart-btn .fa-square-poll-vertical{
+  display: none;
+}
+}
 .search-box{
   
   min-height: 30px;

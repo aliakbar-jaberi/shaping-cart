@@ -63,7 +63,7 @@ searchInput.addEventListener("input", (e) => {
 
 // Open the shopping cart
 function openCart() {
-  cart.style.top = "50%";
+  cart.style.top = "10%";
   backdrop.style.display = "block";
 }
 
@@ -226,7 +226,7 @@ class Ui {
               >
             </div>
           </td>
-          <td><i class="fa-solid fa-trash-can"  data-id="${cartItem.id}"></i></td>`;
+          <td class="cart-botton" ><i class="fa-solid fa-trash-can"  data-id="${cartItem.id}"></i></td>`;
     cartContent.appendChild(tr);
   }
 
