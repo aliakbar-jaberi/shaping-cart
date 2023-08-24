@@ -394,11 +394,15 @@ color: var(--primaryColor);
 .cart__btn{
   display: flex;
   justify-content: space-between;
+ 
 }
 
 .cart__btn button{
   border: 1px solid var(--primaryColor);
   font-size: 15px;
+  display: flex;
+  align-items: center;
+
 }
 .cart__btn button{
   scale: 0.85;
