@@ -258,7 +258,7 @@ border-collapse: collapse;
 
   }
     .cart-botton {
-      border-bottom: 2px solid var(--mainGrey);
+      border-bottom: 1px solid var(--mainGrey);
     }
     .cart-namber{
       flex-direction: row;
