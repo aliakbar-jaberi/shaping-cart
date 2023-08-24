@@ -263,6 +263,10 @@ border-collapse: collapse;
     .cart-namber{
       flex-direction: row;
     }
+
+        .cart .cart--conteinr {
+    
+          max-height: 300px;}
 }
 .cart-img{
   width: 70px;
